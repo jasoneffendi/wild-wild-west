@@ -1,9 +1,8 @@
 var express = require('express');
+var fbCtrl = require('../controllers/fb')
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.post('/', fbCtrl.login);
 
 module.exports = router;
