@@ -1,16 +1,34 @@
 <template>
   <div class="hello">
-
+    <button v-on:click="tester()" type="button" name="button">Tekanan</button>
   </div>
 </template>
 
 <script>
+import {mapActions, mapState} from 'vuex'
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
     }
+  },
+  methods: {
+    tester () {
+      this.addUser()
+      console.log('tekanan diterima')
+    },
+    ...mapActions([
+      'addUser'
+    ])
+  },
+  computed: {
+    ...mapState([
+      'pemain'
+    ])
+  },
+  created () {
+  },
+  watch: {
   }
 }
 </script>
