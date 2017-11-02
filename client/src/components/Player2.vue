@@ -1,55 +1,29 @@
 <template lang="html">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-
-      </div>
-      <div class="col-md-4">
-        <refree></refree>
-      </div>
-      <div class="col-md-4">
-
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-5">
-        <player1></player1>
-      </div>
-      <div class="col-md-2">
-
-      </div>
-      <div class="col-md-5">
-        <player2></player2>
-      </div>
-    </div>
+  <div class="panel panel-default">
+  <div class="panel-body">
+    {{ profilName }}
   </div>
+  <div class="panel-footer">
+    <!-- <img src="https://usatcowboyswire.files.wordpress.com/2016/02/cowboysnavicon.png"
+    alt="" style="width: 150px"> -->
+    <img v-bind:src="profilPicture" alt="" style="width: 100px">
+    <button @click="login" type="button" class="btn btn-primary">Login</button>
+    <button type="button" class="btn btn-primary">Shoot</button>
+  </div>
+</div>
 </template>
 
 <script>
-import Refree from '@/components/Refree'
-import Player1 from '@/components/Player1'
-import Player2 from '@/components/Player2'
 export default {
-  components: {
-    Refree,
-    Player1,
-    Player2
-  },
   data () {
     return {
-      refree: '',
-      player1: '',
-      player2: '',
-      profilPicture: '',
-      profilName: ''
+      profilName: '',
+      profilPicture: ''
     }
   },
   methods: {
     login () {
+      var self = this
       // console.log('asdfasdfa')
       window.FB.getLoginStatus(function (response) {
         statusChangeCallback(response)
@@ -57,18 +31,19 @@ export default {
       function statusChangeCallback (response) {
         if (response.status === 'connected') {
           window.FB.logout()
-          this.profilPicture = ''
-          this.profilName = ''
+          self.profilPicture = ''
+          self.profilName = ''
         } else {
           window.FB.login(function (response) {
             if (response.authResponse) {
-              // window.FB.api('me', {fields: ['id', 'name', 'email', 'picture.type(large)'], access_token:body.accessToken},
-              // function (response) {
-              //
-              // }
               //  console.log('Welcome!  Fetching your information.... ');
-              window.FB.api('/me', function (response) {
-                console.log('Good to see you, ' + response.name + '.')
+              window.FB.api('/me', {fields: ['id', 'name', 'email', 'picture.type(large)']}, function (response) {
+                // console.log('Good to see you, ' + response.name + '.')
+                console.log(response)
+                self.profilName = response.name
+                self.profilPicture = response.picture.data.url
+                console.log(self.profilPicture)
+                // window.FB.logout()
               })
               // this.$http.post('http://localhost:3000/api/login', {
               //   accessToken: response.authResponse.accessToken
@@ -108,7 +83,4 @@ export default {
 </script>
 
 <style lang="css">
-.container {
-  width: 90%;
-}
 </style>
