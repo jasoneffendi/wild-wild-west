@@ -16,7 +16,9 @@ export default {
   },
   methods: {
     tampakan () {
-      this.mulai()
+      let nilaibaru = !this.trigerStart
+      // console.log('nilaibaru', nilaibaru)
+      this.mulai(nilaibaru)
     },
     ...mapActions([
       'mulai'
