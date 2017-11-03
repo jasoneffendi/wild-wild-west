@@ -7,8 +7,16 @@
     <!-- <img src="https://usatcowboyswire.files.wordpress.com/2016/02/cowboysnavicon.png"
     alt="" style="width: 150px"> -->
     <img v-bind:src="profilPicture" alt="" style="width: 100px">
-    <button @click="login" type="button" class="btn btn-primary">Login</button>
+    <button @click="login" type="button" class="btn btn-primary">{{ buttonText }}</button>
     <button type="button" class="btn btn-primary">Shoot</button>
+    <div class="score-board">
+    <div class="player">
+      <h4>Score</h4>
+      <div class="score-box">
+        15
+      </div>
+    </div>
+  </div>
   </div>
 </div>
 </template>
@@ -18,48 +26,59 @@ export default {
   data () {
     return {
       profilName: '',
-      profilPicture: ''
+      profilPicture: '',
+      buttonText: 'Login'
     }
   },
   methods: {
+    setDefault () {
+      this.profilName = 'Player1'
+      this.profilPicture = 'https://usatcowboyswire.files.wordpress.com/2016/02/cowboysnavicon.png'
+    },
+    statusChangeCallback (response) {
+      var self = this
+      if (response.status === 'connected') {
+        window.FB.logout()
+        self.setDefault()
+        self.buttonText = 'Login'
+      } else {
+        window.FB.login(function (response) {
+          if (response.authResponse) {
+            //  console.log('Welcome!  Fetching your information.... ');
+            window.FB.api('/me', {fields: ['id', 'name', 'email', 'picture.type(large)']}, function (response) {
+              // console.log('Good to see you, ' + response.name + '.')
+              console.log(response)
+              self.profilName = response.name
+              self.profilPicture = response.picture.data.url
+              self.buttonText = 'Logout'
+              // window.FB.logout()
+            })
+            // this.$http.post('http://localhost:3000/api/login', {
+            //   accessToken: response.authResponse.accessToken
+            // })
+            // .then(response => {
+            //   //
+            // })
+          } else {
+            console.log('User cancelled login or did not fully authorize.')
+          }
+        })
+      }
+    },
     login () {
       var self = this
       // console.log('asdfasdfa')
       window.FB.getLoginStatus(function (response) {
-        statusChangeCallback(response)
+        self.statusChangeCallback(response)
       })
-      function statusChangeCallback (response) {
-        if (response.status === 'connected') {
-          window.FB.logout()
-          self.profilPicture = ''
-          self.profilName = ''
-        } else {
-          window.FB.login(function (response) {
-            if (response.authResponse) {
-              //  console.log('Welcome!  Fetching your information.... ');
-              window.FB.api('/me', {fields: ['id', 'name', 'email', 'picture.type(large)']}, function (response) {
-                // console.log('Good to see you, ' + response.name + '.')
-                console.log(response)
-                self.profilName = response.name
-                self.profilPicture = response.picture.data.url
-                console.log(self.profilPicture)
-                // window.FB.logout()
-              })
-              // this.$http.post('http://localhost:3000/api/login', {
-              //   accessToken: response.authResponse.accessToken
-              // })
-              // .then(response => {
-              //   //
-              // })
-            } else {
-              console.log('User cancelled login or did not fully authorize.')
-            }
-          })
-        }
-      }
     }
   },
   mounted: function () {
+    if (this.profilName === '') {
+      this.setDefault()
+    } else {
+      this.buttonText = 'Logout'
+    }
     // Load the SDK asynchronously
     (function (d, s, id) {
       var js
@@ -83,4 +102,20 @@ export default {
 </script>
 
 <style lang="css">
+  /*.score-board {
+    text-align: center;
+    padding: 25px;
+  }
+  .player {
+    display: inline-block;
+    padding: 15px;
+  }
+  .player h4 {
+    font-weight: bold;
+  }*/
+.score-box {
+  border: 3px solid black;
+  padding: 30px;
+  color: #2CB3C9;
+}
 </style>
