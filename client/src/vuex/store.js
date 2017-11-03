@@ -48,8 +48,9 @@ const mutations = {
     state.datasatuansatu = payload
   },
   mulai (state, payload) {
-    state.trigerStart = !state.trigerStart
-    state.count = payload
+    let barunya = payload.status
+    state.trigerStart = barunya
+    // state.count = payload
   }
 
 }
@@ -89,14 +90,30 @@ const actions = {
     Vue.prototype.$db.ref('wild-wild-west/user/' + data.id).remove()
   },
   mulai ({commit}, data) {
-    commit('mulai', data)
+    // Vue.prototype.$db.ref('wild-wild-west/dataSatuan/').push({
+    //   status: 'false'
+    // })
+    // .then((data) => {
+    //   // commit('addPengguna', data)
+    //   console.log('kembalian', data.key)
+    // })
+    Vue.prototype.$db.ref('wild-wild-west/dataSatuan/' + '-Ky-FGjLhDIz_ftXxEII').set({
+      status: data
+    })
+    const ref = firebase.database().ref('wild-wild-west/dataSatuan/' + '-Ky-FGjLhDIz_ftXxEII')
+    ref.on('value', (snap) => {
+      // commit('ambilDataSatuan', snap.val())
+      // console.log('berapa', snap.val().status)
+      commit('mulai', snap.val())
+    })
+    // commit('mulai', data)
   },
   getOneUser ({commit}, data) {
     console.log(data)
     const ref = firebase.database().ref('wild-wild-west/user/' + data)
     ref.on('value', (snap) => {
       commit('ambilDataSatuan', snap.val())
-      // console.log(snap.val())
+      // console.log('Get One', snap.val())
     })
   },
   getOneUser1 ({commit}, data) {
