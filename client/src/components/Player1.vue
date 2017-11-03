@@ -4,33 +4,80 @@
     {{ profilName }}
   </div>
   <div class="panel-footer">
-    <!-- <img src="https://usatcowboyswire.files.wordpress.com/2016/02/cowboysnavicon.png"
-    alt="" style="width: 150px"> -->
-    <img v-bind:src="profilPicture" alt="" style="width: 100px">
-    <button @click="login" type="button" class="btn btn-primary">{{ buttonText }}</button>
-    <button type="button" class="btn btn-primary">Shoot</button>
-    <div class="score-board">
-    <div class="player">
-      <h4>Score</h4>
-      <div class="score-box">
-        15
+    <div align="center">
+      <img v-bind:src="profilPicture" alt="" style="width: 100px; height:115px; padding: 5px">
+      <div class="">
+        <button @click="login" type="button" class="btn btn-primary">{{ buttonText }}</button>
       </div>
+
+      <div class="" v-if="status == true"></div>
+      <div class="" v-else>
+        <div class="" v-if="trigerStart == true">
+          <!-- <button v-on:click="tester()" type="button" name="button">Tekanan</button> -->
+          <button @click="tester()" type="button" class="btn btn-primary">Shoot</button>
+        </div>
+        <div class="" v-else></div>
+
+        <!-- <div class="" v-for="(data, key) in datanya">
+        <p>
+        {{data}} - {{ key }}
+        </p>
+        <button v-on:click="update(kunci, data.username, data.point)" type="button" name="button">Ganti</button>
+        <button v-on:click="anjing(key)" type="button" name="button">Hapus</button>
+      </div> -->
+
+      <div class="">
+        <p>{{datasatuan}}</p>
+        <button v-on:click="update(kunci, datasatuan.username, datasatuan.point)" type="button" name="button">Ganti</button>
+      </div>
+      <!-- <p>{{datasatuan}}</p> -->
+      </div>
+      {{status}} - {{oknum}}
     </div>
-  </div>
   </div>
 </div>
 </template>
 
 <script>
+import {mapActions, mapState} from 'vuex'
 export default {
   data () {
     return {
       profilName: '',
       profilPicture: '',
-      buttonText: 'Login'
+      buttonText: 'Login',
+      kunci: '-Kxxs-4W5DWdBt_iZoDr'
     }
   },
   methods: {
+    tester () {
+      this.addUser()
+      // console.log('tekanan diterima')
+      this.mulai('Kiri')
+    },
+    update (id, username, point) {
+      let obj = {
+        id: id,
+        username: username,
+        point: point
+      }
+      // console.log(obj)
+      this.upUser(obj)
+    },
+    anjing (data) {
+      let obj = {
+        id: data
+      }
+      this.deleteUser(obj)
+    },
+    ...mapActions([
+      'addUser',
+      'getUser',
+      'upUser',
+      'deleteUser',
+      'mulai',
+      'getOneUser'
+    ]),
     setDefault () {
       this.profilName = 'Player1'
       this.profilPicture = 'https://usatcowboyswire.files.wordpress.com/2016/02/cowboysnavicon.png'
@@ -97,25 +144,25 @@ export default {
         version: 'v2.8' // use graph api version 2.8
       })
     }
+  },
+  computed: {
+    ...mapState([
+      'datanya',
+      'pemain',
+      'trigerStart',
+      'count',
+      'datasatuan',
+      'status',
+      'oknum'
+    ])
+  },
+  created () {
+    this.getOneUser(this.kunci)
+    // console.log(this.semuatodo)
+    this.getUser()
   }
 }
 </script>
 
 <style lang="css">
-  /*.score-board {
-    text-align: center;
-    padding: 25px;
-  }
-  .player {
-    display: inline-block;
-    padding: 15px;
-  }
-  .player h4 {
-    font-weight: bold;
-  }*/
-.score-box {
-  border: 3px solid black;
-  padding: 30px;
-  color: #2CB3C9;
-}
 </style>

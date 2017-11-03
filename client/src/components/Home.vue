@@ -16,13 +16,13 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-5">
+      <div class="col-md-4">
         <player1></player1>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-4">
 
       </div>
-      <div class="col-md-5">
+      <div class="col-md-4">
         <player2></player2>
       </div>
     </div>
@@ -34,6 +34,7 @@ import Refree from '@/components/Refree'
 import Player1 from '@/components/Player1'
 import Player2 from '@/components/Player2'
 export default {
+  name: 'Home',
   components: {
     Refree,
     Player1,

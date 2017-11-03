@@ -1,6 +1,8 @@
 <template>
   <div class="hello">
-    <button v-on:click="tester()" type="button" name="button">Tekanan</button>
+    <button v-on:click="tampakan()" type="button" name="button">Tekanan</button>
+    <h3>{{trigerStart}}</h3>
+    <h2>{{count}}</h2>
   </div>
 </template>
 
@@ -13,17 +15,17 @@ export default {
     }
   },
   methods: {
-    tester () {
-      this.addUser()
-      console.log('tekanan diterima')
+    tampakan () {
+      this.mulai()
     },
     ...mapActions([
-      'addUser'
+      'mulai'
     ])
   },
   computed: {
     ...mapState([
-      'pemain'
+      'trigerStart',
+      'count'
     ])
   },
   created () {

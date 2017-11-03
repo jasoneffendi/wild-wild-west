@@ -4,16 +4,22 @@
     {{ profilName }}
   </div>
   <div class="panel-footer">
-    <!-- <img src="https://usatcowboyswire.files.wordpress.com/2016/02/cowboysnavicon.png"
-    alt="" style="width: 150px"> -->
-    <img v-bind:src="profilPicture" alt="" style="width: 100px">
-    <button @click="login" type="button" class="btn btn-primary">{{ buttonText }}</button>
-    <button type="button" class="btn btn-primary">Start</button>
+    <div align="center">
+      <img v-bind:src="profilPicture" alt="" style="width: 100px; height:115px; padding: 5px">
+      <div class="">
+        <button @click="login" type="button" class="btn btn-primary">{{ buttonText }}</button>
+        <button @click="tampakan()" type="button" class="btn btn-primary">Start</button>
+      </div>
+      <!-- <button v-on:click="tampakan()" type="button" name="button">Tekanan</button> -->
+      <h3>{{trigerStart}}</h3>
+      <h2>{{count}}</h2>
+    </div>
   </div>
 </div>
 </template>
 
 <script>
+import {mapActions, mapState} from 'vuex'
 export default {
   data () {
     return {
@@ -23,6 +29,12 @@ export default {
     }
   },
   methods: {
+    tampakan () {
+      this.mulai()
+    },
+    ...mapActions([
+      'mulai'
+    ]),
     setDefault () {
       this.profilName = 'Refree'
       this.profilPicture = 'https://usatcowboyswire.files.wordpress.com/2016/02/cowboysnavicon.png'
@@ -89,9 +101,19 @@ export default {
         version: 'v2.8' // use graph api version 2.8
       })
     }
+  },
+  computed: {
+    ...mapState([
+      'trigerStart',
+      'count'
+    ])
   }
 }
 </script>
 
 <style lang="css">
+.panel-body{
+  color: white;
+}
+/*.panel-body r*/
 </style>
