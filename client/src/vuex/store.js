@@ -55,8 +55,9 @@ const mutations = {
   },
   selesai (state, payload) {
     console.log(payload)
-    let barunya = payload.status
-    state.status = barunya
+    let barunya = payload.pemain
+    state.oknum = barunya
+    console.log('test', payload)
   }
 
 }
@@ -102,19 +103,12 @@ const actions = {
     console.log(data)
     if (data.point >= 50) {
       console.log('habis')
-      let rubahpermainan = !state.status
-      state.oknum = data.username
-      console.log('oknum', state.oknum)
+      // let rubahpermainan = !state.status
+      // state.oknum = data.username
+      // console.log('oknum', state.oknum)
 
       Vue.prototype.$db.ref('wild-wild-west/dataSatuan/' + '-Ky02T5GQcJrHk_ReNdu').set({
-        status: rubahpermainan
-      })
-
-      const ref = firebase.database().ref('wild-wild-west/dataSatuan/' + '-Ky-FGjLhDIz_ftXxEII')
-      ref.on('value', (snap) => {
-        // commit('ambilDataSatuan', snap.val())
-        // console.log('berapa', snap.val().status)
-        commit('selesai', snap.val())
+        pemain: data.username
       })
     } else {
       Vue.prototype.$db.ref('wild-wild-west/user/' + data.id).set({
@@ -231,6 +225,15 @@ const actions = {
     })
     Vue.prototype.$db.ref('wild-wild-west/dataSatuan/' + '-Ky02T5GQcJrHk_ReNdu').set({
       status: false
+    })
+  },
+  pemenang ({commit}) {
+    const ref = firebase.database().ref('wild-wild-west/dataSatuan/' + '-Ky02T5GQcJrHk_ReNdu')
+    ref.on('value', (snap) => {
+      // commit('ambilDataSatuan', snap.val())
+      // console.log('berapa', snap.val().status)
+      commit('selesai', snap.val())
+      console.log('nilai', snap.val())
     })
   }
 }

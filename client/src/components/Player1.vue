@@ -11,39 +11,17 @@
       </div>
     </div>
 
-    <div class="" v-if="status == true">
-
+    <div class="" v-if="trigerStart == true">
+      <button v-on:click="update(kunci, datasatuan.username, datasatuan.point, datasatuan.status, datasatuan.profilepicture)" type="button" name="button">Tekanan</button>
     </div>
     <div class="" v-else>
 
-      <div class="" v-if="trigerStart == true">
-        <button v-on:click="update(kunci, datasatuan.username, datasatuan.point, datasatuan.status, datasatuan.profilepicture)" type="button" name="button">Tekanan</button>
-      </div>
-      <div class="" v-else>
-
-      </div>
-
-      <!-- <div class="" v-for="(data, key) in datanya">
-      <p>
-      {{data}} - {{ key }}
-    </p>
-    <button v-on:click="update(kunci, data.username, data.point)" type="button" name="button">Ganti</button>
-    <button v-on:click="anjing(key)" type="button" name="button">Hapus</button>
-  </div> -->
-
-  <h1 style="text-align:center;color:#ffffff">{{datasatuan.point}}</h1>
-  <!-- <div class="">
-    <button v-on:click="update(kunci, datasatuan.username, datasatuan.point, datasatuan.status, datasatuan.profilepicture)" type="button" name="button">Ganti</button>
-  </div> -->
-
-  <!-- <p>{{datasatuan}}</p> -->
-  <!-- {{status}} - {{oknum}} -->
-
     </div>
 
+    <h1 style="text-align:center;color:#ffffff">{{datasatuan.point}}</h1>
+    {{status}} - {{oknum}}
 
   </div>
-  {{status}} - {{oknum}}
 </div>
 </template>
 
@@ -97,7 +75,8 @@ export default {
       'mulai',
       'getOneUser',
       'getTokenUser',
-      'getTokenUserDelete'
+      'getTokenUserDelete',
+      'pemenang'
     ]),
     setDefault () {
       this.profilName = 'Player1'
@@ -185,6 +164,12 @@ export default {
     this.getOneUser(this.kunci)
     // console.log(this.semuatodo)
     this.getUser()
+    this.pemenang()
+  },
+  watch: {
+    oknum: function (halo) {
+      this.pemenang()
+    }
   }
 }
 </script>

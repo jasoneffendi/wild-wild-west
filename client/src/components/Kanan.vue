@@ -74,7 +74,8 @@ export default {
       'deleteUser',
       'mulai',
       'getOneUser1',
-      'getTokenUserTwo'
+      'getTokenUserTwo',
+      'pemenang'
     ])
   },
   computed: {
@@ -92,8 +93,12 @@ export default {
     this.getOneUser1(this.kunci)
     // console.log(this.semuatodo)
     this.getUser()
+    this.pemenang()
   },
   watch: {
+    oknum: function (halo) {
+      this.pemenang()
+    }
   }
 }
 </script>
