@@ -11,35 +11,14 @@
       </div>
     </div>
 
-    <div class="" v-if="status == true">
-
+    <div class="" v-if="trigerStart == true">
+      <button v-on:click="update(kunci, datasatuansatu.username, datasatuansatu.point, datasatuansatu.status, datasatuansatu.profilepicture)" type="button" name="button">Tekanan</button>
     </div>
     <div class="" v-else>
 
-      <div class="" v-if="trigerStart == true">
-        <button v-on:click="update(kunci, datasatuansatu.username, datasatuansatu.point, datasatuansatu.status, datasatuansatu.profilepicture)" type="button" name="button">Tekanan</button>
-      </div>
-      <div class="" v-else>
-
-      </div>
-
-      <!-- <div class="" v-for="(data, key) in datanya">
-      <p>
-      {{data}} - {{ key }}
-    </p>
-    <button v-on:click="update(kunci, data.username, data.point)" type="button" name="button">Ganti</button>
-    <button v-on:click="anjing(key)" type="button" name="button">Hapus</button>
-  </div> -->
-
-  <h1 style="text-align:center;color:#ffffff">{{datasatuansatu.point}}</h1>
-  <!-- <div class="">
-    <button v-on:click="update(kunci, datasatuansatu.username, datasatuansatu.point, datasatuansatu.status, datasatuansatu.profilepicture)" type="button" name="button">Ganti</button>
-  </div> -->
-
-  <!-- <p>{{datasatuansatu}}</p> -->
-
     </div>
 
+    <h1 style="text-align:center;color:#ffffff">{{datasatuansatu.point}}</h1>
 
   </div>
   {{status}} - {{oknum}}
@@ -69,7 +48,7 @@ export default {
       let nilaibaru = !this.trigerStart
       // console.log('nilaibaru', nilaibaru)
       this.mulai(nilaibaru)
-      alert(this.oknum)
+      // alert(this.oknum)
       console.log('aloha', picture)
       let obj = {
         id: id,
