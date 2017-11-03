@@ -7,20 +7,18 @@
     <div align="center">
       <img v-bind:src="datasatuan.profilepicture" alt="" style="width: 100px; height:115px; padding: 5px">
       <div class="">
-        <button @click="login" type="button" class="btn btn-primary">{{ buttonText }}</button>
+        <button @click="login" type="button" class="btn btn-primary">{{ buttonText }}</button><br><br>
+        <div class="" v-if="trigerStart == true">
+          <button class="btn btn-primary" v-on:click="update(kunci, datasatuan.username, datasatuan.point, datasatuan.status, datasatuan.profilepicture)" type="button" name="button">Fire</button>
+        </div>
+        <div class="" v-else>
+
+        </div>
+
+        <h1 style="text-align:center;color:#ffffff">{{datasatuan.point}}</h1>
+        <h2>{{status}} - {{oknum}}</h2>
       </div>
     </div>
-
-    <div class="" v-if="trigerStart == true">
-      <button v-on:click="update(kunci, datasatuan.username, datasatuan.point, datasatuan.status, datasatuan.profilepicture)" type="button" name="button">Tekanan</button>
-    </div>
-    <div class="" v-else>
-
-    </div>
-
-    <h1 style="text-align:center;color:#ffffff">{{datasatuan.point}}</h1>
-    {{status}} - {{oknum}}
-
   </div>
 </div>
 </template>

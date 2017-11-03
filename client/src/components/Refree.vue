@@ -7,20 +7,15 @@
     <div align="center">
       <img v-bind:src="profilPicture" alt="" style="width: 100px; height:115px; padding: 5px">
       <div class="">
-        <button @click="login" type="button" class="btn btn-primary">{{ buttonText }}</button>
-        <button @click="tampakan()" type="button" class="btn btn-primary">Start</button>
+        <!-- <button @click="login" type="button" class="btn btn-primary">{{ buttonText }}</button> -->
+        <!-- <button @click="tampakan()" type="button" class="btn btn-primary">Start</button> -->
+        <button v-on:click="tampakan()" type="button" name="button" class="btn btn-primary">Start</button>
+        <!-- <h3>{{trigerStart}}</h3> -->
+        <h2>{{count}}</h2>
       </div>
       <!-- <button v-on:click="tampakan()" type="button" name="button">Tekanan</button> -->
-      <h3>{{trigerStart}}</h3>
-      <h2>{{count}}</h2>
     </div>
   </div>
-
-  <button v-on:click="tampakan()" type="button" name="button">Tekanan</button>
-  <h3>{{trigerStart}}</h3>
-  <h2>{{count}}</h2>
-
-  <button v-on:click="buat()" type="button" name="button"></button>
 </div>
 </template>
 
