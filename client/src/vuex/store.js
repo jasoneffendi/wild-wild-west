@@ -24,24 +24,87 @@ firebase.initializeApp(config)
 Vue.prototype.$db = firebase.database()
 
 const state = {
-  pemain: []
+  pemain: [],
+  datanya: [],
+  trigerStart: false,
+  count: '',
+  datasatuan: [],
+  datasatuansatu: [],
+  status: false,
+  oknum: ''
 }
 
 const mutations = {
   addPengguna (state, payload) {
     state.pemain = payload
-    console.log(payload)
+  },
+  ambilData (state, payload) {
+    state.datanya = payload
+  },
+  ambilDataSatuan (state, payload) {
+    state.datasatuan = payload
+  },
+  ambilDataSatuan1 (state, payload) {
+    state.datasatuansatu = payload
+  },
+  mulai (state, payload) {
+    state.trigerStart = !state.trigerStart
+    state.count = payload
   }
+
 }
 
 const actions = {
   addUser ({commit}) {
     Vue.prototype.$db.ref('wild-wild-west/user/').push({
       username: 'tester',
-      point: '100'
+      point: 100
     })
-    .then(({data}) => {
-      commit('addPengguna', data)
+    .then((data) => {
+      // commit('addPengguna', data)
+      console.log('kembalian', data.key)
+    })
+  },
+  getUser ({commit}) {
+    const ref = firebase.database().ref('wild-wild-west/user/')
+    ref.on('value', (snap) => {
+      commit('ambilData', snap.val())
+      console.log(snap.val())
+    })
+  },
+  upUser ({commit}, data) {
+    if (data.point <= 0) {
+      console.log('habis')
+      state.status = !state.status
+      state.oknum = data.username
+    } else {
+      Vue.prototype.$db.ref('wild-wild-west/user/' + data.id).set({
+        username: data.username,
+        point: data.point -= 20
+      })
+    }
+  },
+  deleteUser ({commit}, data) {
+    console.log(data.id)
+    Vue.prototype.$db.ref('wild-wild-west/user/' + data.id).remove()
+  },
+  mulai ({commit}, data) {
+    commit('mulai', data)
+  },
+  getOneUser ({commit}, data) {
+    console.log(data)
+    const ref = firebase.database().ref('wild-wild-west/user/' + data)
+    ref.on('value', (snap) => {
+      commit('ambilDataSatuan', snap.val())
+      // console.log(snap.val())
+    })
+  },
+  getOneUser1 ({commit}, data) {
+    console.log(data)
+    const ref = firebase.database().ref('wild-wild-west/user/' + data)
+    ref.on('value', (snap) => {
+      commit('ambilDataSatuan1', snap.val())
+      // console.log(snap.val())
     })
   }
 }
