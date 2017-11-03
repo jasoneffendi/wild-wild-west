@@ -57,6 +57,11 @@ export default {
         username: username,
         point: point,
         status: status
+    update (id, username, point) {
+      let obj = {
+        id: id,
+        username: username,
+        point: point
       }
       // console.log(obj)
       this.upUser(obj)
