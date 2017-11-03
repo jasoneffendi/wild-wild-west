@@ -1,39 +1,48 @@
 <template lang="html">
   <div class="panel panel-default">
   <div class="panel-body">
-    {{ profilName }}
+    {{ datasatuansatu.username }}
   </div>
   <div class="panel-footer">
-    <div class="" align="center">
-      <img v-bind:src="profilPicture" alt="" style="width: 100px; height:115px; padding: 5px">
+    <div align="center">
+      <img v-bind:src="datasatuansatu.profilepicture" alt="" style="width: 100px; height:115px; padding: 5px">
       <div class="">
         <button @click="login" type="button" class="btn btn-primary">{{ buttonText }}</button>
       </div>
-
-      <div class="" v-if="status == true"></div>
-      <div class="" v-else>
-        <div class="" v-if="trigerStart == true">
-          <!-- <button v-on:click="tester()" type="button" name="button">Tekanan</button> -->
-          <button @click="tester()" type="button" class="btn btn-primary">Shoot</button>
-        </div>
-        <div class="" v-else></div>
-
-          <!-- <div class="" v-for="(data, key) in datanya">
-          <p>
-          {{data}} - {{ key }}
-          </p>
-          <button v-on:click="update(kunci, data.username, data.point)" type="button" name="button">Ganti</button>
-          <button v-on:click="anjing(key)" type="button" name="button">Hapus</button>
-        </div> -->
-
-        <div class="">
-          <p>{{datasatuansatu}}</p>
-          <button v-on:click="update(kunci, datasatuansatu.username, datasatuansatu.point)" type="button" name="button">Ganti</button>
-        </div>
-      </div>
-      {{status}} - {{oknum}}
     </div>
+
+    <div class="" v-if="status == true">
+
+    </div>
+    <div class="" v-else>
+
+      <div class="" v-if="trigerStart == true">
+        <button v-on:click="update(kunci, datasatuansatu.username, datasatuansatu.point, datasatuansatu.status, datasatuansatu.profilepicture)" type="button" name="button">Tekanan</button>
+      </div>
+      <div class="" v-else>
+
+      </div>
+
+      <!-- <div class="" v-for="(data, key) in datanya">
+      <p>
+      {{data}} - {{ key }}
+    </p>
+    <button v-on:click="update(kunci, data.username, data.point)" type="button" name="button">Ganti</button>
+    <button v-on:click="anjing(key)" type="button" name="button">Hapus</button>
+  </div> -->
+
+  <h1 style="text-align:center;color:#ffffff">{{datasatuansatu.point}}</h1>
+  <!-- <div class="">
+    <button v-on:click="update(kunci, datasatuansatu.username, datasatuansatu.point, datasatuansatu.status, datasatuansatu.profilepicture)" type="button" name="button">Ganti</button>
+  </div> -->
+
+  <!-- <p>{{datasatuansatu}}</p> -->
+
+    </div>
+
+
   </div>
+  {{status}} - {{oknum}}
 </div>
 </template>
 
@@ -45,7 +54,8 @@ export default {
       profilName: '',
       profilPicture: '',
       buttonText: 'Login',
-      kunci: '-Kxxs-onVj6eUMQPcMqF'
+      kunci: '-Kxxs-onVj6eUMQPcMqF',
+      fbtoken: []
     }
   },
   methods: {
@@ -55,11 +65,18 @@ export default {
       this.mulai('Kanan')
       this.update(this.kunci, 'username', 'tester')
     },
-    update (id, username, point) {
+    update (id, username, point, status, picture) {
+      let nilaibaru = !this.trigerStart
+      // console.log('nilaibaru', nilaibaru)
+      this.mulai(nilaibaru)
+      alert(this.oknum)
+      console.log('aloha', picture)
       let obj = {
         id: id,
         username: username,
-        point: point
+        point: point,
+        status: status,
+        profilPicture: picture
       }
       // console.log(obj)
       this.upUser(obj)
@@ -76,7 +93,9 @@ export default {
       'upUser',
       'deleteUser',
       'mulai',
-      'getOneUser1'
+      'getOneUser1',
+      'getTokenUserTwo',
+      'getTokenUserDeleteTwo'
     ]),
     setDefault () {
       this.profilName = 'Player1'
@@ -88,6 +107,7 @@ export default {
         window.FB.logout()
         self.setDefault()
         self.buttonText = 'Login'
+        self.getTokenUserDeleteTwo()
       } else {
         window.FB.login(function (response) {
           if (response.authResponse) {
@@ -95,6 +115,9 @@ export default {
             window.FB.api('/me', {fields: ['id', 'name', 'email', 'picture.type(large)']}, function (response) {
               // console.log('Good to see you, ' + response.name + '.')
               console.log(response)
+              self.fbtoken = response
+              console.log('test', self.fbtoken)
+              self.getTokenUserTwo(self.fbtoken)
               self.profilName = response.name
               self.profilPicture = response.picture.data.url
               self.buttonText = 'Logout'
