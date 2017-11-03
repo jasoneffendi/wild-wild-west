@@ -4,12 +4,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
+// var mongoose = require('mongoose');
+// mongoose.Promise = global.Promise;
 
-var db = 'mongodb://jason:123@wildcluster-shard-00-00-njdpc.mongodb.net:27017,wildcluster-shard-00-01-njdpc.mongodb.net:27017,wildcluster-shard-00-02-njdpc.mongodb.net:27017/test?ssl=true&replicaSet=wildCluster-shard-0&authSource=admin'
+// var db = 'mongodb://jason:123@wildcluster-shard-00-00-njdpc.mongodb.net:27017,wildcluster-shard-00-01-njdpc.mongodb.net:27017,wildcluster-shard-00-02-njdpc.mongodb.net:27017/test?ssl=true&replicaSet=wildCluster-shard-0&authSource=admin'
 
-mongoose.connect(db);
+// mongoose.connect(db);
 
 var index = require('./routes/index');
 var users = require('./routes/users');

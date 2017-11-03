@@ -22,7 +22,7 @@
 
     <div class="">
       <p>{{datasatuansatu}}</p>
-      <button v-on:click="update(kunci, datasatuansatu.username, datasatuansatu.point)" type="button" name="button">Ganti</button>
+      <button v-on:click="update(kunci, datasatuansatu.username, datasatuansatu.point, datasatuansatu.status)" type="button" name="button">Ganti</button>
     </div>
 
   </div>
@@ -51,6 +51,12 @@ export default {
       this.mulai('Kanan')
       this.update(this.kunci, 'username', 'tester')
     },
+    update (id, username, point, status) {
+      let obj = {
+        id: id,
+        username: username,
+        point: point,
+        status: status
     update (id, username, point) {
       let obj = {
         id: id,
@@ -72,7 +78,9 @@ export default {
       'upUser',
       'deleteUser',
       'mulai',
-      'getOneUser1'
+      'getOneUser1',
+      'getTokenUserTwo',
+      'pemenang'
     ])
   },
   computed: {
@@ -90,8 +98,12 @@ export default {
     this.getOneUser1(this.kunci)
     // console.log(this.semuatodo)
     this.getUser()
+    this.pemenang()
   },
   watch: {
+    oknum: function (halo) {
+      this.pemenang()
+    }
   }
 }
 </script>
