@@ -15,6 +15,12 @@
       <h2>{{count}}</h2>
     </div>
   </div>
+
+  <button v-on:click="tampakan()" type="button" name="button">Tekanan</button>
+  <h3>{{trigerStart}}</h3>
+  <h2>{{count}}</h2>
+
+  <button v-on:click="buat()" type="button" name="button"></button>
 </div>
 </template>
 
@@ -29,11 +35,17 @@ export default {
     }
   },
   methods: {
+    buat () {
+      this.finish()
+    },
     tampakan () {
-      this.mulai()
+      let nilaibaru = !this.trigerStart
+      // console.log('nilaibaru', nilaibaru)
+      this.mulai(nilaibaru)
     },
     ...mapActions([
-      'mulai'
+      'mulai',
+      'finish'
     ]),
     setDefault () {
       this.profilName = 'Refree'

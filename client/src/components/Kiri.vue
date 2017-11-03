@@ -22,7 +22,7 @@
 
   <div class="">
     <p>{{datasatuan}}</p>
-    <button v-on:click="update(kunci, datasatuan.username, datasatuan.point)" type="button" name="button">Ganti</button>
+    <button v-on:click="update(kunci, datasatuan.username, datasatuan.point, datasatuan.status)" type="button" name="button">Ganti</button>
   </div>
 
   <!-- <p>{{datasatuan}}</p> -->
@@ -56,7 +56,8 @@ export default {
       let obj = {
         id: id,
         username: username,
-        point: point
+        point: point,
+        status: status
       }
       // console.log(obj)
       this.upUser(obj)
